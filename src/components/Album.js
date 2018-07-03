@@ -38,9 +38,10 @@ class Album extends Component {
 
     onPress(url) {
         this.props.navigation.navigate('AlbumDetails', {
-            URL: url,
+            URL: url.url,
+
         });
-        console.log("Album :" + {url})
+        // console.log("title :" + {title})
 
     }
 

@@ -56,9 +56,6 @@ class Albums extends Component {
                         <Text style={styles.postContentText}>
                             {title}
                         </Text>
-                        <Text style={styles.postBody}>
-                            {body}
-                        </Text>
                     </View>
                     <View>
 
@@ -76,7 +73,6 @@ class Albums extends Component {
     render() {
 
         const {posts, loading, error} = this.state;
-        const {navigate} = this.props.navigation;
 
         if (loading) {
             return (
@@ -90,12 +86,11 @@ class Albums extends Component {
             return (
                 <View style={styles.center}>
                     <Text>
-                        Ops,Failed to load posts!
+                        Ops,Sorry Try agin please!
                     </Text>
                 </View>
             )
         }
-
 
         return (
 
@@ -137,25 +132,17 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 25,
         paddingRight: 15,
+        backgroundColor:'#85C1E9',
+        width:'100%',
+        borderRadius:10
     },
     postContentText: {
         fontSize: 18,
-        textAlign: 'center'
+        textAlign: 'center',
+        color:'#1F618D'
     },
-    postBody: {
-        marginTop: 10,
-        color: 'lightgray',
 
-    },
-    center: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
-        padding: 15,
-        backgroundColor: 'skyblue',
-    },
+
 })
 
 
