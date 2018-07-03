@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react';
-
 import {View, Text, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity , Image} from 'react-native';
+
 import AlbumDetails from "./AlbumDetails";
 
 
@@ -145,17 +145,7 @@ const styles = StyleSheet.create({
         marginLeft:10,
 
     },
-    postNumber: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
 
-    },
-    postNumberText: {
-        fontSize: 100,
-        color: '#fff'
-
-    },
     postContent: {
         flex: 1,
         paddingVertical: 25,
@@ -175,15 +165,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    text: {
-        padding: 15,
-        backgroundColor: 'skyblue',
-    },
-    imageStyle:{
-        width:100,
 
-        height:100,
-    }
 })
 
 export default Album;

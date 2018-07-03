@@ -1,7 +1,5 @@
-
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Router from './Router';
-
 
 
 class App extends Component {
@@ -11,6 +9,5 @@ class App extends Component {
         );
     }
 }
-
 
 export default App;

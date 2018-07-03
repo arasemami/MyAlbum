@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 
 
 class Albums extends Component {
@@ -42,31 +42,22 @@ class Albums extends Component {
 
         return (
             <TouchableOpacity key={id} onPress={() => this.onPress({id})}>
-                <View
-                    key={id}
-                    style={styles.post}
-                >
-
+                <View key={id} style={styles.post}>
                     <View style={styles.postNumber}>
                         <Text style={styles.postNumberText}>
                             {i + 1}
                         </Text>
                     </View>
+
                     <View style={styles.postContent}>
                         <Text style={styles.postContentText}>
                             {title}
                         </Text>
                     </View>
-                    <View>
 
-
-                    </View>
                 </View>
             </TouchableOpacity>
-
-
         )
-
     }
 
 
@@ -108,6 +99,7 @@ class Albums extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:'#2471A3'
     },
     post: {
         flexDirection: 'column',
@@ -132,14 +124,14 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 25,
         paddingRight: 15,
-        backgroundColor:'#85C1E9',
-        width:'100%',
-        borderRadius:10
+        backgroundColor: '#85C1E9',
+        width: '100%',
+        borderRadius: 10
     },
     postContentText: {
         fontSize: 18,
         textAlign: 'center',
-        color:'#1F618D'
+        color: '#1F618D'
     },
 
 
