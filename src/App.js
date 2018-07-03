@@ -1,11 +1,16 @@
 
 import React, { Component } from 'react';
-import Index from './components/Albums';
+import Router from './Router';
 
-export default class App extends Component<Props> {
+
+
+class App extends Component {
     render() {
         return (
-           <Index  />
+            <Router />
         );
     }
 }
+
+
+export default App;
