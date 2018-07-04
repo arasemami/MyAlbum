@@ -1,122 +1,61 @@
-
 import React, {Component} from 'react';
-import {View, Text, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity , Image} from 'react-native';
+import {View, Text, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-import AlbumDetails from "./AlbumDetails";
-
+import {connect} from 'react-redux';
+import {fetchAlbum} from '../actions/postActions';
 
 class Album extends Component {
 
-    state = {
-        loading: true,
-        error: false,
-        posts: [],
-    }
 
-
-
-    componentWillMount = async () => {
+    componentWillMount() {
         const {navigation} = this.props;
         const AlbumIdx = navigation.getParam('AlbumId', 'Its Null');
-
-        try {
-            const response = await
-                fetch('https://jsonplaceholder.typicode.com/photos?albumId=' + AlbumIdx )
-
-            const posts = await
-                response.json()
-
-            this.setState({loading: false, posts})
-
-        }
-        catch (e) {
-            this.setState({loading: false, error: true})
-
-        }
+        this.props.fetchAlbum(AlbumIdx);
     }
 
-
-    onPress(url) {
+    onPress(urlPhoto) {
+        const url = urlPhoto.post.url;
         this.props.navigation.navigate('AlbumDetails', {
-            URL: url.url,
-
+            URL: url,
         });
-        // console.log("title :" + {title})
-
     }
 
+    render() {
 
-    renderPost = ({id, title, body , url , thumbnailUrl} ) => {
 
-        // console.log({id})
+        const postItems = this.props.Albumx.map(post => (
 
-        return (
-            <TouchableOpacity    key={id} onPress={()=>this.onPress({url})} >
+            <TouchableOpacity key={post.id} onPress={() => this.onPress({post})}>
                 <View
-                    key={id}
+                    key={post.id}
                     style={styles.post}
                 >
                     <View style={styles.postContent}>
                         <Text style={styles.postContentText}>
-                            {title}
+                            {post.title}
                         </Text>
                         <Text style={styles.postBody}>
-                            {body}
+                            {post.body}
                         </Text>
                     </View>
-
-                    <View style={styles.thumbnailContainerStyle} >
-                        <Image style={styles.thumbnailStyle} source={{uri:thumbnailUrl}} />
+                    <View style={styles.thumbnailContainerStyle}>
+                        <Image style={styles.thumbnailStyle} source={{uri: post.thumbnailUrl}}/>
                     </View>
-
                 </View>
             </TouchableOpacity>
 
-
-        )
-
-    }
-
-
-
-    render() {
-
-        // const {navigation} = this.props;
-        // const AlbumId = navigation.getParam('AlbumId', 'Its Null');
-
-        const {posts, loading, error} = this.state;
-
-        if (loading) {
-            return (
-                <View style={styles.center}>
-                    <ActivityIndicator animating={true}/>
-                </View>
-            )
-        }
-
-        if (error) {
-            return (
-                <View style={styles.center}>
-                    <Text>
-                        Ops,Failed to load posts!
-                    </Text>
-                </View>
-            )
-        }
-
+        ))
 
         return (
 
             <ScrollView style={styles.container}>
-                {/*<Text>otherParam: {JSON.stringify(AlbumId)}</Text>*/}
-                {posts.map(this.renderPost)}
+                {postItems}
             </ScrollView>
 
         );
     }
 
 }
-
 
 
 const styles = StyleSheet.create({
@@ -131,18 +70,18 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius: 20,
     },
-    thumbnailStyle:{
-        height:100,
-        width:100,
-        backgroundColor:'#ddd',
-        borderRadius:20,
+    thumbnailStyle: {
+        height: 100,
+        width: 100,
+        backgroundColor: '#ddd',
+        borderRadius: 20,
 
     },
-    thumbnailContainerStyle:{
-        justifyContent:'center',
-        alignItems:'center',
-        marginRight:10,
-        marginLeft:10,
+    thumbnailContainerStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+        marginLeft: 10,
 
     },
 
@@ -168,4 +107,9 @@ const styles = StyleSheet.create({
 
 })
 
-export default Album;
+const mapStateToProps = state => ({
+    Albumx: state.Albumx.album
+})
+
+export default connect(mapStateToProps, {fetchAlbum})(Album);
+

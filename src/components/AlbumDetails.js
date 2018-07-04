@@ -1,27 +1,16 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 
-
 class AlbumDetails extends Component {
-
-    state = {
-        loading: true,
-        error: false,
-
-    }
-
 
     render() {
         const {navigation} = this.props;
         const UrlAddress = navigation.getParam('URL', 'Its Null will be default image');
 
         return (
-
             <View style={styles.thumbnailContainerStyle}>
                 <Image style={styles.thumbnailStyle} source={{uri: UrlAddress}}/>
-                {/*{console.log({UrlAddress})}*/}
             </View>
-
         );
     }
 

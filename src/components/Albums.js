@@ -1,94 +1,50 @@
 import React, {Component} from 'react';
 import {View, Text, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import {fetchPosts} from '../actions/postActions';
 
 
 class Albums extends Component {
 
 
-    state = {
-        loading: true,
-        error: false,
-        posts: [],
+    componentWillMount() {
+        this.props.fetchPosts();
     }
 
-
-    componentWillMount = async () => {
-        try {
-            const response = await
-                fetch('https://jsonplaceholder.typicode.com/albums')
-
-            const posts = await
-                response.json()
-
-            this.setState({loading: false, posts})
-
-        }
-        catch (e) {
-            this.setState({loading: false, error: true})
-
-        }
-    }
-
-    onPress(id) {
+    onPress(postNumber) {
+        //console.log(postNumber.post.id);
         this.props.navigation.navigate('Album', {
-            AlbumId: id.id,
+            AlbumId: postNumber.post.id,
         });
-
     }
 
-    renderPost = ({id, title, body}, i) => {
+    render() {
 
-        // console.log({id})
-
-        return (
-            <TouchableOpacity key={id} onPress={() => this.onPress({id})}>
-                <View key={id} style={styles.post}>
+        const postItems = this.props.posts.map(post => (
+            <TouchableOpacity key={post.id} onPress={() => this.onPress({post})}>
+                <View key={post.id} style={styles.post}>
                     <View style={styles.postNumber}>
                         <Text style={styles.postNumberText}>
-                            {i + 1}
+                            {post.id}
                         </Text>
                     </View>
 
                     <View style={styles.postContent}>
                         <Text style={styles.postContentText}>
-                            {title}
+                            {post.title}
                         </Text>
                     </View>
 
                 </View>
             </TouchableOpacity>
-        )
-    }
 
-
-    render() {
-
-        const {posts, loading, error} = this.state;
-
-        if (loading) {
-            return (
-                <View style={styles.center}>
-                    <ActivityIndicator animating={true}/>
-                </View>
-            )
-        }
-
-        if (error) {
-            return (
-                <View style={styles.center}>
-                    <Text>
-                        Ops,Sorry Try agin please!
-                    </Text>
-                </View>
-            )
-        }
+        ))
 
         return (
 
             <ScrollView style={styles.container}>
-                {posts.map(this.renderPost)}
+                {postItems}
             </ScrollView>
-
 
         );
     }
@@ -99,7 +55,7 @@ class Albums extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#2471A3'
+        backgroundColor: '#2471A3'
     },
     post: {
         flexDirection: 'column',
@@ -137,5 +93,8 @@ const styles = StyleSheet.create({
 
 })
 
+const mapStateToProps = state => ({
+    posts: state.posts.items
+})
 
-export default Albums;
+export default connect(mapStateToProps, {fetchPosts})(Albums);
